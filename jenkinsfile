@@ -1,0 +1,24 @@
+pipeline {
+  agent any
+  environment {
+    SUBJECT = "Jenkins-PAC"
+    CLASSNO = 1
+  }
+  parameters {
+  choice choices: ['DEV', 'SIT', 'UAT', 'PRE-PROD', 'PROD'], name: 'ENV'
+  string defaultValue: 'DevOps', name: 'SUBJECT'
+  }
+  stages {
+    stage ('Stage1 : Working with variables') {
+      steps {
+        script {
+          var1 = 20
+          println "Var1 is : ${var1}"
+          println "My pre-defined variables are : ${currentBuild.number} --> ${currentBuild.currentResult}"
+          println "My environment variables are : ${env.SUBJECT}, ${env.CLASSNO}"
+          println "${params.ENV}::::::${params.SUBJECT}"
+        }
+      }
+    }
+  }
+}
